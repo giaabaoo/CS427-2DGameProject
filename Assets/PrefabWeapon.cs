@@ -7,10 +7,14 @@ public class PrefabWeapon : MonoBehaviour
     public Transform firePoint;
     public GameObject arrowPrefab;
 
+    public Animator animator;
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) {
+        string current_weapon_id = animator.GetInteger("Weapon").ToString(); 
+
+        if (Input.GetKeyDown(KeyCode.Q) && current_weapon_id == "2") {
             Shoot();
         }
     }
