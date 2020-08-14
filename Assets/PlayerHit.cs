@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerHit : MonoBehaviour
 {
+
+    public int damage = 40;
+    public GameObject impactEffect;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +21,20 @@ public class PlayerHit : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("breakable")) {
-            other.GetComponent<Pot>().Smash();
+    private void OnTriggerEnter2D(Collider2D hitInfo) {
+        if (hitInfo.CompareTag("breakable")) {
+            hitInfo.GetComponent<Pot>().Smash();
         }
+
+        Enemy enemy = hitInfo.GetComponent<Enemy>();
+		if (enemy != null)
+		{
+			enemy.TakeDamage(damage);
+		}
+		Instantiate(impactEffect, transform.position, transform.rotation);
+
+		Destroy(gameObject);
+
+        
     }
 }
