@@ -30,16 +30,6 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-            Destroy(effect, 1f);
-            DestroyProjectile();
-        }
-    }
-
     void DestroyProjectile()
     {
         Destroy(gameObject);

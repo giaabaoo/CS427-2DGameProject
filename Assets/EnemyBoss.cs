@@ -6,12 +6,12 @@ public class EnemyBoss : MonoBehaviour
 {
 
 
-    public int threshold_hp_eye_strong = 10;
-    public int threshold_hp_eye_intermediate = 8;
-    public int threshold_hp_eye_weak = 6;
-    public int threshold_hp_eye_die = 4;
+    public int threshold_hp_eye_strong = 23;
+    public int threshold_hp_eye_intermediate = 16;
+    public int threshold_hp_eye_weak = 9;
+    public int threshold_hp_eye_die = 0;
 
-    public int cur_hp = 15;
+    int cur_hp = 30;
 
     public GameObject deathEffect;
     public Animator animator;
@@ -19,35 +19,52 @@ public class EnemyBoss : MonoBehaviour
     public void TakeDamage(int damage)
     {
         cur_hp -= damage;
-//        Debug.Log(cur_hp.ToString());
-        if (cur_hp == threshold_hp_eye_strong)
+        Debug.Log(cur_hp.ToString());
+        if (cur_hp <= threshold_hp_eye_strong && cur_hp > threshold_hp_eye_intermediate)
         {
+            Debug.Log("Change");
             State1();
+            return;
         }
-        else if (cur_hp == threshold_hp_eye_intermediate)
+        else if (cur_hp <= threshold_hp_eye_intermediate && cur_hp > threshold_hp_eye_weak)
         {
-            //Die();
+            State2();
+            return;
         }
-        else if (cur_hp == threshold_hp_eye_weak)
+        else if (cur_hp <= threshold_hp_eye_weak && cur_hp > threshold_hp_eye_die)
         {
-            //Die();
+            State3();
+            return;
         }
-        else if (cur_hp == threshold_hp_eye_die)
-        {
-            //Die();
-        }
-        else if (cur_hp == 0)
+        else if (cur_hp <= threshold_hp_eye_die)
         {
             Die();
+            return;
         }
     }
     void State1()
     {
         //Debug.Log("state1");
-        animator = GetComponent<Animator>();
+        animator.SetBool("strong_to_intermediate", true);
+    }
 
-        animator.Play("eye_strong_open_to_close", -1, 0f);
-        animator.Play("eye_intermediate_close_to_open");
+    void State2()
+    {
+        //Debug.Log("state1");
+        animator.SetBool("intermediate_to_weak", true);
+    }
+
+    void State3()
+    {
+        //Debug.Log("state1");
+        animator.SetBool("weak_to_die", true);
+    }
+
+
+    void State4()
+    {
+        //Debug.Log("state1");
+        animator.SetBool("", true);
     }
     void Die()
     {
