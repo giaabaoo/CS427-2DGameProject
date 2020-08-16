@@ -23,11 +23,16 @@ public class PlayerController : MonoBehaviour
 
     [Space]
     [Header("References:")]
+    public GameObject arrowPrefab;
+    public Transform firePoint;
+
+
     public Rigidbody2D rb;
     public Animator animator;
 
     public PlayerState currentState;
     public PlayerWeapon currentWeapon;
+
 
     void Start() {
         currentState = PlayerState.walk;
@@ -43,6 +48,8 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleInputs() {
+        ChooseWeapons();
+
         player_movement = Vector2.zero;
         player_movement.x = Input.GetAxisRaw("Horizontal");
         player_movement.y = Input.GetAxisRaw("Vertical");
@@ -51,35 +58,78 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q) && currentState != PlayerState.attack) {
             animator.SetInteger("Skill", 1);
-            StartCoroutine(AttackCo());
+            
+            if (currentWeapon == PlayerWeapon.no_weapon) {
+                StartCoroutine(NormalAttackCo());
+            }
+            else if (currentWeapon == PlayerWeapon.bow) {
+                StartCoroutine(BowAttackCo());
+            }
         }
 
         else if (Input.GetKeyDown(KeyCode.W) && currentState != PlayerState.attack) {
             animator.SetInteger("Skill", 2);
-            StartCoroutine(AttackCo());
+             if (currentWeapon == PlayerWeapon.no_weapon) {
+                StartCoroutine(NormalAttackCo());
+            }
         }
+
+
 
         else if (currentState == PlayerState.walk) {
             UpdateAnimationAndMove();
         }
 
 
-      /*  if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            weapon = 1;
+     
+    }
+
+    void ChooseWeapons() {
+         if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            currentWeapon = PlayerWeapon.no_weapon;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            weapon = 2;
-        }*/
+            currentWeapon = PlayerWeapon.bow;
+        }
+
+        if (currentWeapon == PlayerWeapon.no_weapon) {
+            animator.SetInteger("Weapon", 0);
+        }
+
+        if (currentWeapon == PlayerWeapon.bow) {
+            animator.SetInteger("Weapon", 1);
+        }
     }
 
-    private IEnumerator AttackCo() {
+    private IEnumerator NormalAttackCo() {
         animator.SetBool("Attack", true);
         currentState = PlayerState.attack;
         yield return null;
         animator.SetBool("Attack", false);
         yield return new WaitForSeconds(.1f);
         currentState = PlayerState.walk;
+    }
+
+    private IEnumerator BowAttackCo() {
+        animator.SetBool("Attack", true);
+        currentState = PlayerState.attack;
+        yield return null;
+        FireArrow();
+        animator.SetBool("Attack", false);
+        yield return new WaitForSeconds(.1f);
+        currentState = PlayerState.walk;
+    }
+
+    private void FireArrow() {
+        Vector2 temp = new Vector2(animator.GetFloat("Horizontal"), animator.GetFloat("Vertical"));
+        Arrow arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity).GetComponent<Arrow>();
+        arrow.Setup(temp, ChooseArrowDirection());
+    }
+
+    Vector3 ChooseArrowDirection() {
+        float temp = Mathf.Atan2(animator.GetFloat("Vertical"), animator.GetFloat("Horizontal"))*Mathf.Rad2Deg;
+        return new Vector3(0,0, temp);
     }
 
     void Move(){
@@ -92,14 +142,6 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("Horizontal", player_movement.x);
             animator.SetFloat("Vertical", player_movement.y);
         }
-
-    /*    if (weapon == 1) {
-            animator.SetInteger("Weapon", 1);
-        }
-
-        if (weapon == 2) {
-            animator.SetInteger("Weapon", 2);
-        }*/
       
         animator.SetFloat("Speed", player_movement.sqrMagnitude);
 

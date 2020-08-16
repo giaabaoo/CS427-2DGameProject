@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 46380580}
   - component: {fileID: 46380581}
   - component: {fileID: 46380582}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprites
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,9 +229,9 @@ GameObject:
   - component: {fileID: 281463146}
   - component: {fileID: 281463147}
   - component: {fileID: 281463148}
-  m_Layer: 0
-  m_Name: Randi
-  m_TagString: Untagged
+  m_Layer: 8
+  m_Name: Randitmp
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -244,7 +244,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281463142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6866424, y: 0.15502112, z: 0}
+  m_LocalPosition: {x: 0.02, y: 7.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 46380580}
@@ -265,6 +265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_movement: {x: 0, y: 0}
   player_speed: 100
+  arrowPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
   rb: {fileID: 281463145}
   animator: {fileID: 533496836}
   currentState: 0
@@ -357,9 +359,9 @@ GameObject:
   - component: {fileID: 399605663}
   - component: {fileID: 399605664}
   - component: {fileID: 399605665}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hit box up
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -420,7 +422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee433d7052ecda8419f5c46b4922c815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
   damage: 40
+  rb: {fileID: 533496840}
   impactEffect: {fileID: 1757903830361718727, guid: d7da198963e0f2f4eb262943ef5d46a4,
     type: 3}
 --- !u!1 &519420028
@@ -434,7 +438,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -521,9 +525,10 @@ GameObject:
   - component: {fileID: 533496840}
   - component: {fileID: 533496839}
   - component: {fileID: 533496838}
-  m_Layer: 0
+  - component: {fileID: 533496841}
+  m_Layer: 10
   m_Name: Randi
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -536,7 +541,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533496833}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.43235755, y: -0.15197887, z: 0}
+  m_LocalPosition: {x: 3.604, y: 0.846, z: 0}
   m_LocalScale: {x: 2.8912737, y: 2.8912737, z: 2.8912737}
   m_Children:
   - {fileID: 519420032}
@@ -586,7 +591,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 868591499
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -8132386790803302875, guid: 17064cbe28b324d4bb8f4eb5bef61f72,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -631,7 +636,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.00040061027, y: -0.0003547743}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -642,7 +647,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.32}
+  m_Size: {x: 0.13973428, y: 0.30058366}
   m_EdgeRadius: 0
 --- !u!114 &533496838
 MonoBehaviour:
@@ -651,7 +656,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533496833}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82ac98b4d3e23f643b3d0f6965aa688f, type: 3}
   m_Name: 
@@ -673,7 +678,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_movement: {x: 0, y: 0}
-  player_speed: 0
+  player_speed: 5
+  arrowPrefab: {fileID: 3044871333110208625, guid: 1aaa0f27f7052b843981d7f9ca0cd746,
+    type: 3}
+  firePoint: {fileID: 1796333292}
   rb: {fileID: 533496840}
   animator: {fileID: 533496836}
   currentState: 0
@@ -696,9 +704,23 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &533496841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533496833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5af1075eeca654d95ef91d92927d82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thrust: 3
+  knockTime: 0.3
 --- !u!1 &1069072724
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,9 +874,9 @@ GameObject:
   - component: {fileID: 1120869814}
   - component: {fileID: 1120869815}
   - component: {fileID: 1120869816}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hit box down
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -915,7 +937,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee433d7052ecda8419f5c46b4922c815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
   damage: 40
+  rb: {fileID: 533496840}
   impactEffect: {fileID: 1757903830361718727, guid: d7da198963e0f2f4eb262943ef5d46a4,
     type: 3}
 --- !u!1 &1320377925
@@ -931,9 +955,10 @@ GameObject:
   - component: {fileID: 1320377929}
   - component: {fileID: 1320377928}
   - component: {fileID: 1320377927}
-  m_Layer: 0
+  - component: {fileID: 1320377931}
+  m_Layer: 8
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -946,7 +971,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320377925}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.999, y: -0.204, z: 0}
+  m_LocalPosition: {x: 4.88, y: 1.29, z: 0}
   m_LocalScale: {x: 1.9595231, y: 2.6130207, z: 4.3831606}
   m_Children: []
   m_Father: {fileID: 0}
@@ -980,7 +1005,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.01704809}
+  m_Offset: {x: 0.0054912567, y: -0.019875452}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -991,7 +1016,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.46, y: 0.38038656}
+  m_Size: {x: 0.35814196, y: 0.31946543}
   m_EdgeRadius: 0
 --- !u!95 &1320377929
 Animator:
@@ -1063,6 +1088,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &1320377931
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320377925}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1411747224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,9 +1165,10 @@ GameObject:
   - component: {fileID: 1535968360}
   - component: {fileID: 1535968361}
   - component: {fileID: 1535968362}
-  m_Layer: 0
+  - component: {fileID: 1535968363}
+  m_Layer: 10
   m_Name: hit box right
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1165,11 +1212,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.16476014, y: 0.086613975}
+    - - {x: 0.20313978, y: 0.09491441}
       - {x: 0.10747242, y: 0.09874702}
       - {x: 0.06545585, y: -0.042817697}
-      - {x: 0.13253315, y: -0.035190962}
-      - {x: 0.16415553, y: 0.051606067}
+      - {x: 0.1688383, y: -0.039341185}
+      - {x: 0.19734868, y: 0.04123051}
 --- !u!114 &1535968362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1182,9 +1229,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee433d7052ecda8419f5c46b4922c815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
   damage: 40
+  rb: {fileID: 533496840}
   impactEffect: {fileID: 1757903830361718727, guid: d7da198963e0f2f4eb262943ef5d46a4,
     type: 3}
+--- !u!58 &1535968363
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535968359}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.10822518, y: 0.027359858}
+  serializedVersion: 2
+  m_Radius: 0.112626724
 --- !u!1 &1627740188
 GameObject:
   m_ObjectHideFlags: 0
@@ -4446,9 +4511,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1796333292}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FirePoint
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4461,7 +4526,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796333291}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.106, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 533496834}
@@ -6697,9 +6762,9 @@ GameObject:
   - component: {fileID: 1913506035}
   - component: {fileID: 1913506036}
   - component: {fileID: 1913506037}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hit box left
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6761,6 +6826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee433d7052ecda8419f5c46b4922c815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
   damage: 40
+  rb: {fileID: 533496840}
   impactEffect: {fileID: 1757903830361718727, guid: d7da198963e0f2f4eb262943ef5d46a4,
     type: 3}

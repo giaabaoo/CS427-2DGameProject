@@ -14,7 +14,7 @@ public class PrefabWeapon : MonoBehaviour
     {
         string current_weapon_id = animator.GetInteger("Weapon").ToString(); 
 
-        if (Input.GetKeyDown(KeyCode.Q) && current_weapon_id == "2") {
+        if (Input.GetKeyDown(KeyCode.Q) && current_weapon_id == "1") {
             Shoot();
         }
     }

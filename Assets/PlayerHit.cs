@@ -5,20 +5,16 @@ using UnityEngine;
 public class PlayerHit : MonoBehaviour
 {
 
-    public int damage = 40;
-    public GameObject impactEffect;
+    public float speed = 1f;
+	public int damage = 40;
+	public Rigidbody2D rb;
+	public GameObject impactEffect;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //rb.velocity = transform.right * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D hitInfo) {
@@ -26,14 +22,18 @@ public class PlayerHit : MonoBehaviour
             hitInfo.GetComponent<Pot>().Smash();
         }
 
+
         Enemy enemy = hitInfo.GetComponent<Enemy>();
 		if (enemy != null)
 		{
+            Debug.Log("Hit enemy");
+
 			enemy.TakeDamage(damage);
+
 		}
 		Instantiate(impactEffect, transform.position, transform.rotation);
 
-		Destroy(gameObject);
+		//Destroy(gameObject);
 
         
     }

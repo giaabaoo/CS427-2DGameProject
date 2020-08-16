@@ -9,21 +9,40 @@ public class Arrow : MonoBehaviour
 	public Rigidbody2D rb;
 	public GameObject impactEffect;
 
-	// Use this for initialization
-	void Start () {
+	// void OnTriggerEnter2D (Collider2D hitInfo)
+	// {
+	// 	Enemy enemy = hitInfo.GetComponent<Enemy>();
+	// 	if (enemy != null)
+	// 	{
+	// 		enemy.TakeDamage(damage);
+	// 	}
+
+	// 	Instantiate(impactEffect, transform.position, transform.rotation);
+
+	// 	Destroy(gameObject);
+	// }
+
+	void Start() {
 		rb.velocity = transform.right * speed;
+	}
+
+	public void Setup(Vector2 velocity, Vector3 direction) {
+		rb.velocity = velocity.normalized * speed;
+		transform.rotation = Quaternion.Euler(direction);
 	}
 
 	void OnTriggerEnter2D (Collider2D hitInfo)
 	{
+		if (hitInfo.CompareTag("breakable")) {
+            hitInfo.GetComponent<Pot>().Smash();
+        }
 		Enemy enemy = hitInfo.GetComponent<Enemy>();
 		if (enemy != null)
 		{
 			enemy.TakeDamage(damage);
+			Destroy(gameObject);
 		}
 
 		Instantiate(impactEffect, transform.position, transform.rotation);
-
-		Destroy(gameObject);
 	}
 }
