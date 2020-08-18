@@ -5,7 +5,9 @@ using UnityEngine;
 public enum PlayerState{
     walk,
     attack,
-    interact
+    interact,
+    stagger,
+    idle
 }
 
 public enum PlayerWeapon {
@@ -20,6 +22,9 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 player_movement;
     public float player_speed;
+    public PlayerState currentState;
+    public PlayerWeapon currentWeapon;
+    public FloatValue currentHealth;
 
     [Space]
     [Header("References:")]
@@ -30,8 +35,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
 
-    public PlayerState currentState;
-    public PlayerWeapon currentWeapon;
+    
 
 
     void Start() {
@@ -56,7 +60,7 @@ public class PlayerController : MonoBehaviour
         player_speed = Mathf.Clamp(player_movement.magnitude, 5.0f, 10.0f);
         player_movement.Normalize();
 
-        if (Input.GetKeyDown(KeyCode.Q) && currentState != PlayerState.attack) {
+        if (Input.GetKeyDown(KeyCode.Q) && currentState != PlayerState.attack && currentState != PlayerState.stagger) {
             animator.SetInteger("Skill", 1);
             
             if (currentWeapon == PlayerWeapon.no_weapon) {
@@ -67,7 +71,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        else if (Input.GetKeyDown(KeyCode.W) && currentState != PlayerState.attack) {
+        else if (Input.GetKeyDown(KeyCode.W) && currentState != PlayerState.attack && currentState != PlayerState.stagger) {
             animator.SetInteger("Skill", 2);
              if (currentWeapon == PlayerWeapon.no_weapon) {
                 StartCoroutine(NormalAttackCo());
@@ -76,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-        else if (currentState == PlayerState.walk) {
+        else if (currentState == PlayerState.walk || currentState == PlayerState.idle) {
             UpdateAnimationAndMove();
         }
 
@@ -115,9 +119,11 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Attack", true);
         currentState = PlayerState.attack;
         yield return null;
-        FireArrow();
         animator.SetBool("Attack", false);
-        yield return new WaitForSeconds(.1f);
+        
+        yield return new WaitForSeconds(.3f);
+        FireArrow();
+
         currentState = PlayerState.walk;
     }
 
@@ -145,5 +151,18 @@ public class PlayerController : MonoBehaviour
       
         animator.SetFloat("Speed", player_movement.sqrMagnitude);
 
+    }
+
+    public void Knock(float knockTime) {
+        StartCoroutine(KnockCo(knockTime));
+    }
+
+    public IEnumerator KnockCo(float knockTime) {
+        if (rb != null) {
+            yield return new WaitForSeconds(knockTime);
+            rb.velocity = Vector2.zero;
+            currentState = PlayerState.idle;
+            rb.velocity = Vector2.zero;
+        }
     }
 }
