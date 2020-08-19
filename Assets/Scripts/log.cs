@@ -38,10 +38,12 @@ public class log : Enemy
                 ChangeState(EnemyState.walk);
                 anim.SetBool("wake_up", true);
             }
-            else if (Vector3.Distance(target.position, transform.position) > chaseRadius) {
+            
+        }
+
+        else if (Vector3.Distance(target.position, transform.position) > chaseRadius) {
                 anim.SetBool("wake_up", false);
             }
-        }
     }
 
     private void SetAnimFloat(Vector2 setVector) {

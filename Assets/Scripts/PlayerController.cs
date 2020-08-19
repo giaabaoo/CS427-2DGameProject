@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [Space]
     [Header("References:")]
+    public SignalSender playerHealthSignal;
     public GameObject arrowPrefab;
     public Transform firePoint;
 
@@ -153,8 +154,16 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void Knock(float knockTime) {
-        StartCoroutine(KnockCo(knockTime));
+    public void Knock(float knockTime, float damage) {
+        currentHealth.RuntimeValue -= damage;
+        playerHealthSignal.Raise();
+
+        if (currentHealth.RuntimeValue > 0) {
+            StartCoroutine(KnockCo(knockTime));
+        }
+        else {
+            this.gameObject.SetActive(false);
+        }
     }
 
     public IEnumerator KnockCo(float knockTime) {
