@@ -9,20 +9,22 @@ public class Arrow : MonoBehaviour
 	public Rigidbody2D rb;
 	public GameObject impactEffect;
 
-	// void OnTriggerEnter2D (Collider2D hitInfo)
-	// {
-	// 	Enemy enemy = hitInfo.GetComponent<Enemy>();
-	// 	if (enemy != null)
-	// 	{
-	// 		enemy.TakeDamage(damage);
-	// 	}
+    public int damage_boss_bow = 2;
 
-	// 	Instantiate(impactEffect, transform.position, transform.rotation);
+    // void OnTriggerEnter2D (Collider2D hitInfo)
+    // {
+    // 	Enemy enemy = hitInfo.GetComponent<Enemy>();
+    // 	if (enemy != null)
+    // 	{
+    // 		enemy.TakeDamage(damage);
+    // 	}
 
-	// 	Destroy(gameObject);
-	// }
+    // 	Instantiate(impactEffect, transform.position, transform.rotation);
 
-	void Start() {
+    // 	Destroy(gameObject);
+    // }
+
+    void Start() {
 		rb.velocity = transform.right * speed;
 	}
 
@@ -36,13 +38,25 @@ public class Arrow : MonoBehaviour
 		if (hitInfo.CompareTag("breakable")) {
             hitInfo.GetComponent<Pot>().Smash();
         }
-		Enemy enemy = hitInfo.GetComponent<Enemy>();
-		if (enemy != null)
-		{
-			enemy.TakeDamage(damage);
-			Destroy(gameObject);
-		}
 
-		Instantiate(impactEffect, transform.position, transform.rotation);
-	}
+        if (hitInfo.gameObject.CompareTag("EnemyBoss"))
+        {
+            //hit.GetComponent<EnemyBoss>().currentState = EnemyState.stagger;
+            Debug.Log("here");
+            hitInfo.GetComponent<EnemyBoss>().TakeDamage(damage_boss_bow);
+            Destroy(gameObject);
+        }
+
+        if (hitInfo.gameObject.CompareTag("Enemy"))
+        {
+            Enemy enemy = hitInfo.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+                Destroy(gameObject);
+            }
+        }
+        Instantiate(impactEffect, transform.position, transform.rotation);
+
+    }
 }
