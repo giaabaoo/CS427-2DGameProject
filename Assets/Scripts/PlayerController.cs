@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public PlayerState currentState;
     public PlayerWeapon currentWeapon;
     public FloatValue currentHealth;
+    public VectorValue startingPosition;
 
     [Space]
     [Header("References:")]
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     void Start() {
         currentState = PlayerState.walk;
         currentWeapon = PlayerWeapon.no_weapon;
+        transform.position = startingPosition.initialValue;
         //animator = GetComponent<Animator>();
       //  rb = GetComponent<Rigidbody2D>();
     }
