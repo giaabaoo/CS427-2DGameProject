@@ -85,11 +85,18 @@ public class PlayerController : MonoBehaviour
             
             if (currentWeapon == PlayerWeapon.no_weapon || currentWeapon == PlayerWeapon.spear) {
                 StartCoroutine(NormalAttackCo());
+                if (currentWeapon == PlayerWeapon.no_weapon)
+                    SoundManager.PlaySound("punch");
+                else
+                    SoundManager.PlaySound("spear");
             }
             else if (currentWeapon == PlayerWeapon.bow) {
+                SoundManager.PlaySound("bow_fire_arrow");
                 StartCoroutine(BowAttackCo());
+
             }
             else if (currentWeapon == PlayerWeapon.boomerang) {
+                SoundManager.PlaySound("boomerang");
                 StartCoroutine(BoomAttackCo());
             }
 
