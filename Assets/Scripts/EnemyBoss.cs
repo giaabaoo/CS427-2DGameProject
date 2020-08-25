@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class EnemyBoss : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class EnemyBoss : MonoBehaviour
     public int threshold_hp_eye_intermediate = 16;
     public int threshold_hp_eye_weak = 9;
     public int threshold_hp_eye_die = 0;
+    public string sceneToLoad;
 
     int cur_hp = 30;
 
@@ -69,6 +72,16 @@ public class EnemyBoss : MonoBehaviour
     void Die()
     {
         Instantiate(deathEffect, transform.position, Quaternion.identity);
+        GameObject boss = GameObject.FindWithTag("EnemyBoss");
+
+        Instantiate(deathEffect, boss.transform.position, Quaternion.identity);
+        Destroy(boss);
+
+        GameObject bossface = GameObject.FindWithTag("BossFace");
+        Instantiate(deathEffect, bossface.transform.position, Quaternion.identity);
+        Destroy(bossface);
+
         Destroy(gameObject);
+        SceneManager.LoadScene(sceneToLoad);
     }
 }

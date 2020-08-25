@@ -10,6 +10,10 @@ public class Bullet : MonoBehaviour
     private Vector2 target;
     public GameObject hitEffect;
 
+    public float thrust;
+    public float knockTime;
+    public float damage = 1;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -33,6 +37,37 @@ public class Bullet : MonoBehaviour
     void DestroyProjectile()
     {
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D hitInfo) {
+        if (hitInfo.gameObject.CompareTag("breakable")) {
+            hitInfo.GetComponent<Pot>().Smash();
+        }
+
+        if (hitInfo.gameObject.CompareTag("Player")) {
+            Rigidbody2D hit = hitInfo.GetComponent<Rigidbody2D>();
+            
+
+            if (hit != null) {
+                
+                Vector2 difference = hit.transform.position - transform.position;
+                difference = difference.normalized * thrust;
+                hit.AddForce(difference, ForceMode2D.Impulse);
+
+                if (hitInfo.gameObject.CompareTag("Player"))
+                {
+                    if (hitInfo.GetComponent<PlayerController>().currentState != PlayerState.stagger)
+                    {
+                        hit.GetComponent<PlayerController>().currentState = PlayerState.stagger;
+                        hitInfo.GetComponent<PlayerController>().Knock(knockTime, damage);
+                    }
+                }
+                
+                
+            }
+        }
+
+
     }
 
     //public GameObject hitEffect;

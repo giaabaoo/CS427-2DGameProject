@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum PlayerState{
     walk,
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [Space]
     [Header("Character statistics:")]
 
+    public string sceneToLoad;
+
     public Vector2 player_movement;
     public float player_speed;
     public PlayerState currentState;
@@ -31,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public bool has_bow = false;
     public bool has_boom = false;
     public bool has_spear = true;
+    public VectorValue startingPosition;
+
 
     [Space]
     [Header("References:")]
@@ -52,6 +57,7 @@ public class PlayerController : MonoBehaviour
     void Start() {
         currentState = PlayerState.walk;
         currentWeapon = PlayerWeapon.no_weapon;
+        //transform.position = startingPosition.initialValue;
         //animator = GetComponent<Animator>();
       //  rb = GetComponent<Rigidbody2D>();
     }
@@ -257,7 +263,9 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(KnockCo(knockTime));
         }
         else {
+            SceneManager.LoadScene(sceneToLoad);
             this.gameObject.SetActive(false);
+
         }
     }
 

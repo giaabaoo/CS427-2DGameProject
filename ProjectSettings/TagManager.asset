@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - EnemyBoss
   - Boomerang
+  - BossFace
   layers:
   - Default
   - TransparentFX
