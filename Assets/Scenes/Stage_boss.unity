@@ -6528,17 +6528,17 @@ PrefabInstance:
     - target: {fileID: 6617788024230085850, guid: 22146e8e0b4cc6441ab4117e7caf9d8f,
         type: 3}
       propertyPath: has_boom
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6617788024230085850, guid: 22146e8e0b4cc6441ab4117e7caf9d8f,
         type: 3}
       propertyPath: has_bow
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6617788024230085850, guid: 22146e8e0b4cc6441ab4117e7caf9d8f,
         type: 3}
       propertyPath: has_spear
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6617788024230085850, guid: 22146e8e0b4cc6441ab4117e7caf9d8f,
         type: 3}
