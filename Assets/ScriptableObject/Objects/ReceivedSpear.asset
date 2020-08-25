@@ -9,12 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 970fbe4da81340440809397cc338bfc1, type: 3}
-  m_Name: PlayerInventory
+  m_Script: {fileID: 11500000, guid: a373c84cd0411c14e8b2d4820871e272, type: 3}
+  m_Name: ReceivedSpear
   m_EditorClassIdentifier: 
-  currentItem: {fileID: 0}
-  items: []
-  numberOfKeys: 0
-  numberOfBoomerangs: 0
-  maxMagic: 10
-  currentMagic: 10
+  listeners: []

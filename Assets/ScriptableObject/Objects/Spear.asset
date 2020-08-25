@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d535f7c723136444b751d9dba4b7166, type: 3}
   m_Name: Spear
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: 0}
-  itemDescription: Use a spear for long range attack
+  itemSprite: {fileID: 21300000, guid: 0e08b2300ac3e1b4ab42ac05a2e87eb4, type: 3}
+  itemDescription: Use spear for wide-range melee attack
   isKey: 0
   isBow: 0
   isBoom: 0

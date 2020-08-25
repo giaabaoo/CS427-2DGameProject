@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
             animator.SetInteger("Weapon", 1);
         }
 
-         if (currentWeapon == PlayerWeapon.boomerang) {
+        if (currentWeapon == PlayerWeapon.boomerang) {
             animator.SetInteger("Weapon", 2);
         }
 
@@ -192,6 +192,9 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (playerInventory.currentItem.isBoom) {
                     has_boom = true;
+                }
+                else if (playerInventory.currentItem.isSpear) {
+                    has_spear = true;
                 }
             }
             else

@@ -85,6 +85,7 @@ public class Boom : MonoBehaviour
 
             if (hit != null) {
                 Instantiate(impactEffect, transform.position, Quaternion.identity);
+                Destroy(this.gameObject);
 
                 Vector2 difference = hit.transform.position - transform.position;
                 difference = difference.normalized * thrust;
