@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public float health;
 
 	public GameObject deathEffect;
+	public LootTable lootItem;
 
 	public string enemyName;
 	public int baseAttack;
@@ -42,15 +43,28 @@ public class Enemy : MonoBehaviour
 	public void TakeDamage (float damage)
 	{
 		health -= damage;
-		Debug.Log("Current health: "+health.ToString());
+		//Debug.Log("Current enemy health: "+health.ToString());
 
 		if (health <= 0)
 		{
 			Die();
+			MakeLoot();
 			this.gameObject.SetActive(false);
 		}
 	
 	}
+
+	private void MakeLoot()
+    {
+        if(lootItem != null)
+        {
+            Powerup current = lootItem.LootPowerup();
+            if(current != null)
+            {
+                Instantiate(current.gameObject, transform.position, Quaternion.identity);
+            }
+        }
+    }
 
 	void Die ()
 	{

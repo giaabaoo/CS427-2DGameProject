@@ -12,7 +12,9 @@ public enum PlayerState{
 
 public enum PlayerWeapon {
     no_weapon,
-    bow
+    bow,
+    boomerang,
+    spear
 }
 
 public class PlayerController : MonoBehaviour
@@ -25,12 +27,20 @@ public class PlayerController : MonoBehaviour
     public PlayerState currentState;
     public PlayerWeapon currentWeapon;
     public FloatValue currentHealth;
+    public Inventory playerInventory;
+    public bool has_bow = false;
+    public bool has_boom = false;
+    public bool has_spear = true;
 
     [Space]
     [Header("References:")]
+    public SpriteRenderer receivedItemSprite;
     public SignalSender playerHealthSignal;
     public GameObject arrowPrefab;
+    public GameObject boomPrefab;
     public Transform firePoint;
+    public SignalSender reduceMagic;
+
 
 
     public Rigidbody2D rb;
@@ -53,6 +63,9 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleInputs() {
+        if (currentState == PlayerState.interact) {
+            return;
+        }
         ChooseWeapons();
 
         player_movement = Vector2.zero;
@@ -64,12 +77,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && currentState != PlayerState.attack && currentState != PlayerState.stagger) {
             animator.SetInteger("Skill", 1);
             
-            if (currentWeapon == PlayerWeapon.no_weapon) {
+            if (currentWeapon == PlayerWeapon.no_weapon || currentWeapon == PlayerWeapon.spear) {
                 StartCoroutine(NormalAttackCo());
             }
             else if (currentWeapon == PlayerWeapon.bow) {
                 StartCoroutine(BowAttackCo());
             }
+            else if (currentWeapon == PlayerWeapon.boomerang) {
+                StartCoroutine(BoomAttackCo());
+            }
+
         }
 
         else if (Input.GetKeyDown(KeyCode.W) && currentState != PlayerState.attack && currentState != PlayerState.stagger) {
@@ -94,8 +111,16 @@ public class PlayerController : MonoBehaviour
             currentWeapon = PlayerWeapon.no_weapon;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        if (Input.GetKeyDown(KeyCode.Alpha2) && has_bow) {
             currentWeapon = PlayerWeapon.bow;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3) && has_boom) {
+            currentWeapon = PlayerWeapon.boomerang;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4) && has_spear) {
+            currentWeapon = PlayerWeapon.spear;
         }
 
         if (currentWeapon == PlayerWeapon.no_weapon) {
@@ -105,6 +130,14 @@ public class PlayerController : MonoBehaviour
         if (currentWeapon == PlayerWeapon.bow) {
             animator.SetInteger("Weapon", 1);
         }
+
+         if (currentWeapon == PlayerWeapon.boomerang) {
+            animator.SetInteger("Weapon", 2);
+        }
+
+         if (currentWeapon == PlayerWeapon.spear) {
+            animator.SetInteger("Weapon", 3);
+        }
     }
 
     private IEnumerator NormalAttackCo() {
@@ -113,7 +146,9 @@ public class PlayerController : MonoBehaviour
         yield return null;
         animator.SetBool("Attack", false);
         yield return new WaitForSeconds(.1f);
-        currentState = PlayerState.walk;
+        if (currentState != PlayerState.interact) {
+            currentState = PlayerState.walk;
+        }
     }
 
     private IEnumerator BowAttackCo() {
@@ -125,19 +160,76 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(.3f);
         FireArrow();
 
-        currentState = PlayerState.walk;
+        if (currentState != PlayerState.interact) {
+            currentState = PlayerState.walk;
+        }    
+    }
+
+    private IEnumerator BoomAttackCo() {
+        animator.SetBool("Attack", true);
+        currentState = PlayerState.attack;
+        yield return null;
+        animator.SetBool("Attack", false);
+        
+        yield return new WaitForSeconds(.3f);
+        FireBoom();
+
+        if (currentState != PlayerState.interact) {
+            currentState = PlayerState.walk;
+        }    
+    }
+
+    public void RaiseItem() {
+
+        if (playerInventory.currentItem != null)
+        {
+            if (currentState != PlayerState.interact)
+            {
+                if (playerInventory.currentItem.isBow) {
+                    currentState = PlayerState.interact;
+                    has_bow = true;
+                    receivedItemSprite.sprite = playerInventory.currentItem.itemSprite;
+                }
+                else if (playerInventory.currentItem.isBoom) {
+                    has_boom = true;
+                }
+            }
+            else
+            {
+                currentState = PlayerState.idle;
+                receivedItemSprite.sprite = null;
+                playerInventory.currentItem = null;
+            }
+        }
     }
 
     private void FireArrow() {
-        Vector2 temp = new Vector2(animator.GetFloat("Horizontal"), animator.GetFloat("Vertical"));
-        Arrow arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity).GetComponent<Arrow>();
-        arrow.Setup(temp, ChooseArrowDirection());
+        if (playerInventory.currentMagic > 0){
+            Vector2 temp = new Vector2(animator.GetFloat("Horizontal"), animator.GetFloat("Vertical"));
+            Arrow arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity).GetComponent<Arrow>();
+            arrow.Setup(temp, ChooseProjectileDirection());
+            playerInventory.ReduceMagic(arrow.magicCost);
+            reduceMagic.Raise();
+        }
+        
     }
 
-    Vector3 ChooseArrowDirection() {
+     private void FireBoom() {
+        if (playerInventory.currentMagic > 0){
+            Vector2 temp = new Vector2(animator.GetFloat("Horizontal"), animator.GetFloat("Vertical"));
+            Boom boom = Instantiate(boomPrefab, transform.position, Quaternion.identity).GetComponent<Boom>();
+            boom.Setup(temp, ChooseProjectileDirection());
+            playerInventory.ReduceMagic(boom.magicCost);
+            reduceMagic.Raise();
+        }
+        
+    }
+
+    Vector3 ChooseProjectileDirection() {
         float temp = Mathf.Atan2(animator.GetFloat("Vertical"), animator.GetFloat("Horizontal"))*Mathf.Rad2Deg;
         return new Vector3(0,0, temp);
     }
+
 
     void Move(){
         rb.MovePosition(rb.position + player_movement * player_speed * Time.fixedDeltaTime);

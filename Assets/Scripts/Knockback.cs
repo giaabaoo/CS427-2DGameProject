@@ -10,6 +10,7 @@ public class Knockback : MonoBehaviour
     public int damage_melee_no_weapons = 40;
     public int damage_boss_no_weapons = 1;
     public int damage_boss_weapons = 2;
+	public GameObject impactEffect;
 
     public float damage;
 
@@ -17,6 +18,8 @@ public class Knockback : MonoBehaviour
         if (hitInfo.gameObject.CompareTag("breakable") && this.gameObject.CompareTag("Player")) {
             hitInfo.GetComponent<Pot>().Smash();
         }
+
+        
 
         if (hitInfo.gameObject.CompareTag("EnemyBoss"))
         {
@@ -26,11 +29,17 @@ public class Knockback : MonoBehaviour
          
         }
 
+        if (hitInfo.gameObject.CompareTag("Enemy") && this.gameObject.CompareTag("Enemy")) {
+            return;
+        }
+
         if (hitInfo.gameObject.CompareTag("Enemy") || hitInfo.gameObject.CompareTag("Player")) {
             Rigidbody2D hit = hitInfo.GetComponent<Rigidbody2D>();
             
 
             if (hit != null) {
+                Instantiate(impactEffect, transform.position, Quaternion.identity);
+                
                 Vector2 difference = hit.transform.position - transform.position;
                 difference = difference.normalized * thrust;
                 hit.AddForce(difference, ForceMode2D.Impulse);
@@ -48,8 +57,12 @@ public class Knockback : MonoBehaviour
                         hitInfo.GetComponent<PlayerController>().Knock(knockTime, damage);
                     }
                 }
+                
+                
             }
         }
+
+
     }
 
    

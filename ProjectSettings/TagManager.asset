@@ -7,6 +7,7 @@ TagManager:
   - breakable
   - Enemy
   - EnemyBoss
+  - Boomerang
   layers:
   - Default
   - TransparentFX
@@ -49,4 +50,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 868591499
+    locked: 0
+  - name: breakable
+    uniqueID: 3053283311
     locked: 0

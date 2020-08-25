@@ -144,7 +144,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  damage: 40
   rb: {fileID: 3044871333110208626}
   impactEffect: {fileID: 1250512435990015682, guid: 0a6e4eb45abb78747b0a3e6fe57b4ab8,
     type: 3}
+  thrust: 2
+  knockTime: 0.2
+  damage: 2
+  damage_boss_bow: 2

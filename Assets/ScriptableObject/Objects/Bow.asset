@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d535f7c723136444b751d9dba4b7166, type: 3}
+  m_Name: Bow
+  m_EditorClassIdentifier: 
+  itemSprite: {fileID: 21300000, guid: 673c0651a74c2454590168d2e7fd6ad3, type: 3}
+  itemDescription: It's a bow. Using bow helps damaging enemies from far distance.
+  isKey: 0
+  isBow: 1
+  isBoom: 0
+  isSpear: 0
