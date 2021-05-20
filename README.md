@@ -57,6 +57,7 @@ There are also many utilities inside village map that players can interact with 
 **Box**:
 ![](https://i.imgur.com/K1ZnvO2.png)
 
+https://giaabaoo.itch.io/secret-of-mana-remake?secret=KVinIaFGwhWEXkM1iSufq7lonMc
 
 # References
 
